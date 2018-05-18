@@ -39,12 +39,14 @@ def message_received(bot,update):
 
 
 def add_keyword(bot,update):
+    print(update.message.from_user.id)
     if update.message.from_user.id in config.ADMINS:
         update.message.reply_text("אנא כתוב את המילת מפתח אותה אתה רוצה להוסיף.")
         return NEW_KEYWORD
 
 
 def add_message(bot,update):
+    print(update.message.from_user.id)
     if update.message.from_user.id in config.ADMINS:
         update.message.reply_text("אנא כתוב את ההודעה אותה אתה רוצה להוסיף.")
         return NEW_MESSAGE
