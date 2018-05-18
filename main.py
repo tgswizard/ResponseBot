@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from telegram import Bot
 from telegram.ext import Updater, Dispatcher, MessageHandler, CommandHandler, Filters, ConversationHandler
 import sys
