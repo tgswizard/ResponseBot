@@ -92,8 +92,8 @@ def link_message_op(bot,update,user_data):
     return ConversationHandler.END
 
 
-conv_handler = ConversationHandler(entry_points=[CommandHandler(command="/newmessage", callback=add_message),
-                                                 CommandHandler(command="/newkeyword", callback=add_keyword)],
+conv_handler = ConversationHandler(entry_points=[CommandHandler(command="newmessage", callback=add_message),
+                                                 CommandHandler(command="newkeyword", callback=add_keyword)],
                                    states={
                                        NEW_MESSAGE : [MessageHandler(callback=message_add_op,
                                                                                     filters=Filters.text,pass_user_data=True)],
