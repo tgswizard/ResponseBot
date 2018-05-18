@@ -61,7 +61,10 @@ def message_add_op(bot,update,user_data):
 
 def keyword_add_op(bot,update):
     msg = update.message.text
-    KEY_WORDS = pickle.load(open("key_words.p", "rb"))
+    try:
+        KEY_WORDS = pickle.load(open("key_words.p", "rb"))
+    except FileNotFoundError:
+        KEY_WORDS = []
     if msg in KEY_WORDS:
         update.message.reply_text("המילה כבר מילת מפתח!")
         return ConversationHandler.END
@@ -75,7 +78,10 @@ def keyword_add_op(bot,update):
 def link_message_op(bot,update,user_data):
     keyword = update.message.text
     msg = user_data["msg"]
-    MESSAGES = pickle.load(open("messages.p", "rb"))
+    try:
+        MESSAGES = pickle.load(open("messages.p", "rb"))
+    except FileNotFoundError:
+        MESSAGES = []
     for i in range(0,len(MESSAGES)):
         try:
             if keyword in message[0]:
