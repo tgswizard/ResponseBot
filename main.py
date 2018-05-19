@@ -84,8 +84,8 @@ def link_message_op(bot,update,user_data):
         MESSAGES = []
     for i in range(0,len(MESSAGES)):
         try:
-            if keyword in message[0]:
-                message = [message[0],msg]
+            if keyword in MESSAGES[i][0]:
+                message = [keyword,msg]
                 MESSAGES[i] = message
                 pickle.dump(MESSAGES, open("messages.p", "wb"))
                 update.message.reply_text("ההודעה נוספה")
