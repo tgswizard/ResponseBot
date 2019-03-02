@@ -29,24 +29,34 @@ def message_received(bot,update):
     for keyword in KEY_WORDS:
         if keyword is None:
             continue
+        keyzord = " " + keyword
+        keyqord =  keyword + "?"
         if keyword in msg:
-            for message in MESSAGES:
-                try:
-                    if message[0] == keyword:
-                        update.message.reply_text(message[1])
-                except IndexError:
-                    continue
+            if keyword == msg or keyzord in msg or keyqord in  msg: 
+                for message in MESSAGES:
+                    try:
+                        if message[0] == keyword:
+                            update.message.reply_text(message[1])
+                    except IndexError:
+                        continue
 
 
 def add_keyword(bot,update):
-    print(update.message.from_user.id)
+    #print(update.message.from_user.id)
     if update.message.from_user.id in config.ADMINS:
         update.message.reply_text("אנא כתוב את המילת מפתח אותה אתה רוצה להוסיף.")
+        
         return NEW_KEYWORD
 
+def starter(bot,update):
+    #print(update.message.from_user.id)
+    if update.message.from_user.id in config.ADMINS:
+        update.message.reply_text("Welcome Admin :>")
+
+        return
 
 def add_message(bot,update):
-    print(update.message.from_user.id)
+    #print(update.message.from_user.id)
     if update.message.from_user.id in config.ADMINS:
         update.message.reply_text("אנא כתוב את ההודעה אותה אתה רוצה להוסיף.")
         return NEW_MESSAGE
@@ -66,7 +76,7 @@ def keyword_add_op(bot,update):
     except FileNotFoundError:
         KEY_WORDS = []
     if msg in KEY_WORDS:
-        update.message.reply_text("המילה כבר מילת מפתח!")
+        update.message.reply_text("מילת המפתח כבר קיימת!")
         return ConversationHandler.END
 
     KEY_WORDS.append(msg)
@@ -88,22 +98,23 @@ def link_message_op(bot,update,user_data):
                 message = [keyword,msg]
                 MESSAGES[i] = message
                 pickle.dump(MESSAGES, open("messages.p", "wb"))
-                update.message.reply_text("ההודעה נוספה")
+                update.message.reply_text("ההודעה נוספה - מתוך הלולאה")
                 return ConversationHandler.END
         except IndexError:
             continue
     MESSAGES.append([keyword,msg])
     pickle.dump(MESSAGES, open("messages.p", "wb"))
-    update.message.reply_text("ההודעה נוספה")
+    update.message.reply_text("ההודעה נוספה - מחוץ ללולאה")
     return ConversationHandler.END
 
 
-conv_handler = ConversationHandler(entry_points=[CommandHandler(command="newmessage", callback=add_message),
-                                                 CommandHandler(command="newkeyword", callback=add_keyword)],
+conv_handler = ConversationHandler(entry_points=[CommandHandler(command="xnewdata", callback=add_message),
+                                                 CommandHandler(command="xnewkey", callback=add_keyword),
+                                                 CommandHandler(command="start", callback=starter)],
                                    states={
                                        NEW_MESSAGE : [MessageHandler(callback=message_add_op,
                                                                                     filters=Filters.text,pass_user_data=True)],
-                                       NEW_KEYWORD: [MessageHandler(callback=keyword_add_op,
+                                       NEW_KEYWORD : [MessageHandler(callback=keyword_add_op,
                                                                                    filters=Filters.text)],
                                        LINK_MESSAGE : [MessageHandler(callback=link_message_op,filters=Filters.text,pass_user_data=True)]},
                                    fallbacks=[])
