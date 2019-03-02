@@ -1,0 +1,5 @@
+# -*- coding: utf-8 -*-
+DIRECTIONS = dict()
+TOKEN = "734623472:AAFmH0J5OiHVDIGOE2ZszfTMU3j0m1-JNlw"
+ADMINS = [439680982, 332179343]
+index = 0
